@@ -31,8 +31,13 @@ DOC_LINGUAS = mk nl ru uk zh_CN zh_TW
 
 
 STARDICT_ALL_LINGUAS = C $(DOC_LINGUAS)
-STARDICT_DB2HTML ?= `$(PKG_CONFIG) --variable db2html gnome-doc-utils`
-STARDICT_SYSICONDIR ?= `$(PKG_CONFIG) --variable icondir gnome-doc-utils`/hicolor/48x48/status
+
+#STARDICT_DB2HTML ?= `$(PKG_CONFIG) --variable db2html gnome-doc-utils`
+#STARDICT_SYSICONDIR ?= `$(PKG_CONFIG) --variable icondir gnome-doc-utils`/hicolor/48x48/status
+# gnome-doc-utils is old now!
+STARDICT_DB2HTML ?= /usr/share/xml/gnome/xslt/docbook/html/db2html.xsl
+STARDICT_SYSICONDIR ?= /usr/share/gnome-doc-utils/icons/hicolor/48x48/status
+
 STARDICT_ICONDIR = icons
 STARDICT_HTML_DIRS = $(foreach lc,$(STARDICT_ALL_LINGUAS),$(lc)/html)
 STARDICT_ADMON_ICONS = \

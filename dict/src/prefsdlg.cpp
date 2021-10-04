@@ -81,54 +81,54 @@ struct CategoriesTreeItem {
 };
 
 static CategoriesTreeItem dictionary_behavior [] = {
-	{N_("Scan Selection"), NULL, DICTIONARY_SCAN_SETTINGS},
-	{N_("Font"), NULL, DICTIONARY_FONT_SETTINGS},
-	{N_("Cache"), NULL, DICTIONARY_CACHE_SETTINGS},
-	{N_("Export"), NULL, DICTIONARY_EXPORT_SETTINGS},
-	{N_("Sound"), NULL, DICTIONARY_SOUND_SETTINGS},
-	{N_("Video"), NULL, DICTIONARY_VIDEO_SETTINGS},
-	{N_("Article rendering"), NULL, DICIONARY_ARTICLE_RENDERING},
-	{N_("Dict management"), NULL, DICIONARY_DICT_MANAGEMENT},
+	{(gchar *)N_("Scan Selection"), NULL, DICTIONARY_SCAN_SETTINGS},
+	{(gchar *)N_("Font"), NULL, DICTIONARY_FONT_SETTINGS},
+	{(gchar *)N_("Cache"), NULL, DICTIONARY_CACHE_SETTINGS},
+	{(gchar *)N_("Export"), NULL, DICTIONARY_EXPORT_SETTINGS},
+	{(gchar *)N_("Sound"), NULL, DICTIONARY_SOUND_SETTINGS},
+	{(gchar *)N_("Video"), NULL, DICTIONARY_VIDEO_SETTINGS},
+	{(gchar *)N_("Article rendering"), NULL, DICIONARY_ARTICLE_RENDERING},
+	{(gchar *)N_("Dict management"), NULL, DICIONARY_DICT_MANAGEMENT},
 	{ NULL }
 };
 
 static CategoriesTreeItem network_behavior [] = {
-    {N_("Net Dict"), NULL, NETWORK_NETDICT},
-    {N_("Web browser"), NULL, NETWORK_WEB_BROWSER},
+    {(gchar *)N_("Net Dict"), NULL, NETWORK_NETDICT},
+    {(gchar *)N_("Web browser"), NULL, NETWORK_WEB_BROWSER},
     { NULL }
 };
 
 static CategoriesTreeItem mainwin_behavior [] =
 {
-	{N_("Input"), NULL, MAINWIN_INPUT_SETTINGS},
-	{N_("Options"), NULL, MAINWIN_OPTIONS_SETTINGS},
-	{N_("Search website"), NULL, MAINWIN_SEARCH_WEBSITE_SETTINGS},
+	{(gchar *)N_("Input"), NULL, MAINWIN_INPUT_SETTINGS},
+	{(gchar *)N_("Options"), NULL, MAINWIN_OPTIONS_SETTINGS},
+	{(gchar *)N_("Search website"), NULL, MAINWIN_SEARCH_WEBSITE_SETTINGS},
 
 	{ NULL }
 };
 
 static CategoriesTreeItem NotificationAreaIcon_behavior [] =
 {
-	{N_("Options"), NULL, NOTIFICATION_AREA_ICON_OPITIONS_SETTINGS},
+	{(gchar *)N_("Options"), NULL, NOTIFICATION_AREA_ICON_OPITIONS_SETTINGS},
 
 	{ NULL }
 };
 
 static CategoriesTreeItem floatwin_behavior [] =
 {
-	{N_("Options"), NULL, FLOATWIN_OPTIONS_SETTINGS},
-	{N_("Appearance"), NULL, FLOATWIN_SIZE_SETTINGS},
+	{(gchar *)N_("Options"), NULL, FLOATWIN_OPTIONS_SETTINGS},
+	{(gchar *)N_("Appearance"), NULL, FLOATWIN_SIZE_SETTINGS},
 
 	{ NULL }
 };
 
 static CategoriesTreeItem toplevel [] =
 {
-	{N_("Dictionary"), dictionary_behavior, LOGO},
-	{N_("Network"), network_behavior, LOGO},
-	{N_("Main window"), mainwin_behavior, LOGO},
-	{N_("Notification area icon"), NotificationAreaIcon_behavior, LOGO},
-	{N_("Floating window"), floatwin_behavior, LOGO},
+	{(gchar *)N_("Dictionary"), dictionary_behavior, LOGO},
+	{(gchar *)N_("Network"), network_behavior, LOGO},
+	{(gchar *)N_("Main window"), mainwin_behavior, LOGO},
+	{(gchar *)N_("Notification area icon"), NotificationAreaIcon_behavior, LOGO},
+	{(gchar *)N_("Floating window"), floatwin_behavior, LOGO},
 
 	{ NULL }
 };

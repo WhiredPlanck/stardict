@@ -197,7 +197,8 @@ gchar* DictBase::GetWordData(guint32 idxitem_offset, guint32 idxitem_size)
 		} else {
 			dictdzfile->read(data+sizeof(guint32), idxitem_offset, idxitem_size);
 		}
-		memcpy(data, &idxitem_size, sizeof(guint32));
+		guint32 idxitem_size2 = idxitem_size+sizeof(guint32);
+		memcpy(data, &idxitem_size2, sizeof(guint32));
 	}
 	g_free(cache[cache_cur].data);
 
@@ -234,14 +235,15 @@ bool DictBase::SearchData(std::vector<std::string> &SearchWords, guint32 idxitem
 		for (int i=0; i<sametypesequence_len-1; i++) {
 			if(is_dict_data_type_search_data(sametypesequence[i])) {
 				sec_size = strlen(p);
-				for (j=0; j<nWord; j++)
+				for (j=0; j<nWord; j++) {
+					// KMP() is faster than strstr() in theory. Really? Always be true?
 					// KMP() is slower than strstr() if have no prepare data.
 					//if (!WordFind[j] && KMP(p, sec_size, SearchWords[j].c_str())!=-1) {
 					if (!WordFind[j] && g_strstr_len(p, sec_size, SearchWords[j].c_str())!=NULL) {
 						WordFind[j] = true;
 						++nfound;
 					}
-
+				}
 				if (nfound==nWord)
 					return true;
 				sec_size += sizeof(gchar);
