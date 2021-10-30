@@ -10,22 +10,24 @@ sudo make install
 =============
 Dictdotcn plugin is outdated and have no use now.
 Festival in Fedora linux have some problem and it will cause festival plugin crash, so we need to disable it presently(by --disable-festival). See: https://bugzilla.redhat.com/show_bug.cgi?id=242607
-In Debian linux, it have fixed this bug, so you can use it!
+In Debian Linux, it have fixed this bug, so you can use it!
 
 For developers, you can add --disable-deprecations option!
 
+StarDict don't use lib-gnome by default now!
+
 You can use:
 =============
-./configure --disable-tools
+./configure --disable-tools --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
 =============
 to disable tools building, only compile StarDict program. And:
 =============
-./configure --disable-dict
+./configure --disable-dict --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
 =============
 to disable StarDict program building, only compile tools.
 
-You can use "./configure --enable-gpe-support --prefix=/usr" to build the GPE version of StarDict. For GPE, see http://gpe.handhelds.org
-You can use "./configure --enable-maemo-support --prefix=/usr" to build the Maemo version of StarDict. For Maemo, see http://www.maemo.org
+You can use "./configure --enable-gpe-support --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man" to build the GPE version of StarDict. For GPE, see http://gpe.handhelds.org
+You can use "./configure --enable-maemo-support --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man" to build the Maemo version of StarDict. For Maemo, see http://www.maemo.org
 
 StarDict does not support staged installs, that is you may not use DESTDIR variable to install the application into a custom place like this:
 ============

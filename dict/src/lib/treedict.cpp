@@ -86,10 +86,10 @@ bool TreeDict::load(const std::string& ifofilename)
 			return false;
 		}
 		buffer = (gchar *)g_malloc(tdxfilesize);
-		gulong read_len;
-		read_len = fread(buffer, 1, tdxfilesize, file);
+		size_t read_len;
+		read_len = fread(buffer, tdxfilesize, 1, file);
 		fclose(file);
-		if (read_len!=tdxfilesize) {
+		if (read_len!=1) {
 			g_free(buffer);
 			return false;
 		}
