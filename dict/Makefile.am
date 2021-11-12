@@ -18,9 +18,7 @@ EXTRA_DIST = \
 	treedict.spec	\
 	stardict-installer.nsi stardict-prepare-installer.js \
 	omf.make		\
-	intltool-extract.in 	\
-	intltool-merge.in 	\
-	intltool-update.in	\
+	$(INTLTOOL)	\
 	gnome-doc-utils.make
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper --disable-schemas-install

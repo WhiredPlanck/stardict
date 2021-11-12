@@ -1,6 +1,9 @@
 ## Process this file with automake to produce Makefile.in.
+
 ## always include gnome-doc-utils.make because we need to generate DocBook files in linguas dirs
 #include $(top_srcdir)/gnome-doc-utils.make
+@YELP_HELP_RULES@
+
 if GNOME_SUPPORT
 GNOME_DIST_HOOK = doc-dist-hook
 else
@@ -11,8 +14,8 @@ dist-hook: $(GNOME_DIST_HOOK)
 
 DOC_MODULE = stardict
 DOC_ENTITIES = legal.xml
-DOC_INCLUDES =
-DOC_FIGURES = \
+HELP_ID =
+HELP_MEDIA = \
 	figures/stardict_float_window.png	\
 	figures/stardict_main_window.png	\
 	figures/stardict_notification_area.png	\
@@ -27,16 +30,20 @@ DOC_FIGURES = \
 	figures/acrobat_toolbar.png	\
 	figures/portable_apps_menu.png
 
-DOC_LINGUAS = mk nl ru uk zh_CN zh_TW
+HELP_LINGUAS = mk nl ru uk zh_CN zh_TW
 
 
-STARDICT_ALL_LINGUAS = C $(DOC_LINGUAS)
-
+#STARDICT_ALL_LINGUAS = C $(DOC_LINGUAS)
 #STARDICT_DB2HTML ?= `$(PKG_CONFIG) --variable db2html gnome-doc-utils`
 #STARDICT_SYSICONDIR ?= `$(PKG_CONFIG) --variable icondir gnome-doc-utils`/hicolor/48x48/status
+
 # gnome-doc-utils is old now!
-STARDICT_DB2HTML ?= /usr/share/xml/gnome/xslt/docbook/html/db2html.xsl
-STARDICT_SYSICONDIR ?= /usr/share/gnome-doc-utils/icons/hicolor/48x48/status
+#STARDICT_DB2HTML ?= /usr/share/xml/gnome/xslt/docbook/html/db2html.xsl
+#STARDICT_SYSICONDIR ?= /usr/share/gnome-doc-utils/icons/hicolor/48x48/status
+
+STARDICT_ALL_LINGUAS = C $(HELP_LINGUAS)
+STARDICT_DB2HTML ?= `$(PKG_CONFIG) --variable db2html yelp-xsl`
+
 
 STARDICT_ICONDIR = icons
 STARDICT_HTML_DIRS = $(foreach lc,$(STARDICT_ALL_LINGUAS),$(lc)/html)
@@ -58,14 +65,16 @@ STARDICT_HTML_INSTALL_DIR = $(STARDICT_DATA_DIR)/help
 stardict-html: $(STARDICT_HTML_DIRS)
 
 ## cannot add $(foreach ent,$(DOC_ENTITIES),%/$(ent)) in prerequisits it is for C only
-$(STARDICT_HTML_DIRS): %/html : %/$(DOC_MODULE).xml $(foreach fig,$(DOC_FIGURES),%/$(fig))
+#$(STARDICT_HTML_DIRS): %/html : %/$(DOC_MODULE).xml $(foreach fig,$(DOC_FIGURES),%/$(fig))
+$(STARDICT_HTML_DIRS): %/html : C/$(DOC_MODULE).xml $(foreach fig,$(HELP_MEDIA),%/$(fig))
 	lc=$(patsubst %/html,%,$@); \
 	htmldir=$(srcdir)/$${lc}/html; \
 	chunk_basename=index; \
 	test -d $${htmldir} && rm -rf $${htmldir}; \
 	$(mkinstalldirs) $${htmldir}; \
 	xsltproc -o $${htmldir}/$${chunk_basename}.html --xinclude --param db.chunk.chunk_top "false()" --stringparam db.chunk.basename "$${chunk_basename}" --stringparam db.chunk.extension ".html" --stringparam theme.icon.admon.path "${STARDICT_ICONDIR}/" ${STARDICT_DB2HTML} $<; \
-	for fig in $(DOC_FIGURES); do \
+#	for fig in $(DOC_FIGURES); do \
+	for fig in $(HELP_MEDIA); do \
 		figdir=`echo $$fig | sed -e 's/^\(.*\/\).*/\1/' -e '/\//!s/.*//' -e 's/\/$$//'`; \
 		if test ! -d "$${htmldir}/$${figdir}"; then \
 			$(mkinstalldirs) "$${htmldir}/$${figdir}"; \
@@ -76,7 +85,7 @@ $(STARDICT_HTML_DIRS): %/html : %/$(DOC_MODULE).xml $(foreach fig,$(DOC_FIGURES)
 		if test ! -d "$${htmldir}/$(STARDICT_ICONDIR)"; then \
 			$(mkinstalldirs) "$${htmldir}/$(STARDICT_ICONDIR)"; \
 		fi; \
-		$(INSTALL_DATA) $(STARDICT_SYSICONDIR)/$${icon} $${htmldir}/$(STARDICT_ICONDIR)/$${icon}; \
+#		$(INSTALL_DATA) $(STARDICT_SYSICONDIR)/$${icon} $${htmldir}/$(STARDICT_ICONDIR)/$${icon}; \
 	done;
 
 maintainer-clean-local: stardict-maintainer-clean
@@ -144,6 +153,7 @@ endif
 
 .PHONY: update-po
 update-po:
-	for lc in $(DOC_LINGUAS); do \
+#	for lc in $(DOC_LINGUAS); do \
+	for lc in $(HELP_LINGUAS); do \
 		$(_xml2po) -u $(srcdir)/$${lc}/$${lc}.po $(srcdir)/C/$(DOC_MODULE).xml; \
 	done;
