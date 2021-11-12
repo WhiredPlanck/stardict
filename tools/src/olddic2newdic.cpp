@@ -421,12 +421,12 @@ void convert(char *filename,char *idxheadfilename)
 			if ((previous_datasize == pworditem->datasize)&&
 				(memcmp(previous_data,pworditem->data,previous_datasize)==0)) {
 				
-				g_print("word %s is complete duplicated! droped!\n" ,previous_word);				
+				g_print("word %s is complete duplicated! dropped!\n" ,previous_word);				
 				wordcount--;
 				continue;
 			}
 			else {
-				g_print("word %s is duplicated! droped!\n" ,previous_word);				
+				g_print("word %s is duplicated! dropped!\n" ,previous_word);				
 				wordcount--;
 				continue;
 				

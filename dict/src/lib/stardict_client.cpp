@@ -748,7 +748,7 @@ void StarDictClient::on_resolved(gpointer data, bool resolved, in_addr_t sa_)
 	static bool showed_once = false;
 	if (!showed_once) {
 		showed_once = true;
-	        gchar *mes = g_strdup_printf(_("Can not reslove %s: %s\n"),
+	        gchar *mes = g_strdup_printf(_("Can not resolve %s: %s\n"),
                          oStarDictClient->host_.c_str(), Socket::get_error_msg().c_str());
         	on_error_.emit(mes);
 	        g_free(mes);

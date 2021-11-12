@@ -97,7 +97,7 @@ namespace {
 
 		//this is a real function which parse file,
 		//because of in additition to dsl by itself,
-		//may be need parse file with abbrevations,
+		//may be need parse file with abbreviations,
 		//which have the same format
 		int parse(MapFile& in, bool only_info, bool abr);
 		int print_info();
@@ -356,10 +356,10 @@ namespace {
 			map_file.open(it->c_str());
 
 			if (map_file) {
-				g_critical("Parse file with abbrevations: %s\n", it->c_str());
+				g_critical("Parse file with abbreviations: %s\n", it->c_str());
 				name = index_language = contents_language = from_codeset = "";
 				if (parse(map_file, false, true) != EXIT_SUCCESS) {
-					g_critical("Error during parse abbrevation this file: ");
+					g_critical("Error during parse abbreviation this file: ");
 					g_critical(it->c_str());
 					g_critical("\n");
 					break;

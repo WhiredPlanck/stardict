@@ -56,7 +56,7 @@ gchar *get_cdata(gchar *data)
 {
 	if (!g_str_has_prefix(data, "<![CDATA[")) {
 		if (!g_str_has_prefix(data, "[CDATA[")) {
-			g_print("Error, unknow cdata: %s\n", data);
+			g_print("Error, unknown cdata: %s\n", data);
 			return NULL;
 		} else {
 			g_print("Warning: %s\n", data);
@@ -67,7 +67,7 @@ gchar *get_cdata(gchar *data)
 	}
 	gchar *p = strstr(data, "]]");
 	if (!p) {
-		g_print("Error, unknow cdata end: %s\n", data);
+		g_print("Error, unknown cdata end: %s\n", data);
 		return NULL;
 	}
 	*p='\0';
@@ -195,7 +195,7 @@ static void func_parse_passthrough(GMarkupParseContext *context, const gchar *pa
 	} else if (strcmp(element, "惯用型解释")==0) {
 	} else if (strcmp(element, "另见")==0) {
 	} else {
-		g_print("Warning: Unknow tag: %s - %s - %s\n", element, Data->word, text);
+		g_print("Warning: Unknown tag: %s - %s - %s\n", element, Data->word, text);
 	}
 	g_free(text);
 }

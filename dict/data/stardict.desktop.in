@@ -8,4 +8,5 @@ Type=Application
 Icon=stardict
 StartupNotify=true
 Categories=Utility;Office;TextTools;Dictionary;
+Keywords=Dictionary;
 X-GNOME-DocPath=stardict/stardict.xml

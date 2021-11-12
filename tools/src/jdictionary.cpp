@@ -23,7 +23,7 @@
 
 // This program was written for jdictionary, http://www.jdictionary.info/
 // But i find its data is too chaos, the GerEng which i want is almost the same as dictd_www.freedict.de_deu-eng.
-// So i have droped this program.
+// So I have dropped this program.
 
 #include <glib.h>
 

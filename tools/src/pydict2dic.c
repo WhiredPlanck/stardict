@@ -177,7 +177,7 @@ void convert(char *filename)
 		pworditem = &g_array_index(ecarray, struct _worditem, i);
 		
 		if (strcmp(previous_word,pworditem->word)==0) {
-			g_print("word %s is duplicated! droped!\n" ,previous_word);
+			g_print("word %s is duplicated! dropped!\n" ,previous_word);
 			wordcount--;
 			continue;
 		}
@@ -201,7 +201,7 @@ void convert(char *filename)
 		pworditem = &g_array_index(cearray, struct _worditem, i);
 		
 		if (strcmp(previous_word,pworditem->word)==0) {
-			g_print("word %s is duplicated! droped!\n" ,previous_word);
+			g_print("word %s is duplicated! dropped!\n" ,previous_word);
 			wordcount--;
 			continue;
 		}

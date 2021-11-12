@@ -135,7 +135,7 @@ static bool read_tab_file(gchar *buffer, GArray *array)
 	glong linenum=1;
 	while (true) {
 		if (*p == '\0') {
-			g_message("Convertion is over.");
+			g_message("Conversion is over.");
 			break;
 		}
 		p1 = strchr(p,'\n');

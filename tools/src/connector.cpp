@@ -126,7 +126,7 @@ void Connector::fill_key(const std::string& keystr)
 #endif
 			p = end + sizeof("<nu />") - 1;
 		} else {
-			g_critical("Unkown tag here: %s, line: %s\n", q, keystr.c_str());
+			g_critical("Unknown tag here: %s, line: %s\n", q, keystr.c_str());
 			exit(EXIT_FAILURE);
 		}
 	}
