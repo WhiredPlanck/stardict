@@ -1,0 +1,6 @@
+Font name:
+Noto Serif Bold Italic
+
+Font size:
+15
+
