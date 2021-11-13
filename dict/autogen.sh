@@ -17,6 +17,12 @@ REQUIRED_AUTOMAKE_VERSION=1.9
     exit 1
 }
 
+GNOMEDOC=`which yelp-build`
+if test -z $GNOMEDOC; then
+    echo "*** The tools to build the documentation are not found,"
+    echo "    please intall the yelp-tools package ***"
+    exit 1
+fi
 
 which gnome-autogen.sh || {
     echo "You need to install gnome-common package"

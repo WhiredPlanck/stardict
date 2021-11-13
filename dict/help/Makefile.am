@@ -73,7 +73,6 @@ $(STARDICT_HTML_DIRS): %/html : C/$(DOC_MODULE).xml $(foreach fig,$(HELP_MEDIA),
 	test -d $${htmldir} && rm -rf $${htmldir}; \
 	$(mkinstalldirs) $${htmldir}; \
 	xsltproc -o $${htmldir}/$${chunk_basename}.html --xinclude --param db.chunk.chunk_top "false()" --stringparam db.chunk.basename "$${chunk_basename}" --stringparam db.chunk.extension ".html" --stringparam theme.icon.admon.path "${STARDICT_ICONDIR}/" ${STARDICT_DB2HTML} $<; \
-#	for fig in $(DOC_FIGURES); do \
 	for fig in $(HELP_MEDIA); do \
 		figdir=`echo $$fig | sed -e 's/^\(.*\/\).*/\1/' -e '/\//!s/.*//' -e 's/\/$$//'`; \
 		if test ! -d "$${htmldir}/$${figdir}"; then \
@@ -85,7 +84,6 @@ $(STARDICT_HTML_DIRS): %/html : C/$(DOC_MODULE).xml $(foreach fig,$(HELP_MEDIA),
 		if test ! -d "$${htmldir}/$(STARDICT_ICONDIR)"; then \
 			$(mkinstalldirs) "$${htmldir}/$(STARDICT_ICONDIR)"; \
 		fi; \
-#		$(INSTALL_DATA) $(STARDICT_SYSICONDIR)/$${icon} $${htmldir}/$(STARDICT_ICONDIR)/$${icon}; \
 	done;
 
 maintainer-clean-local: stardict-maintainer-clean
