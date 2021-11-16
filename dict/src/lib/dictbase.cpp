@@ -260,12 +260,13 @@ bool DictBase::SearchData(std::vector<std::string> &SearchWords, guint32 idxitem
 		}
 		if(is_dict_data_type_search_data(sametypesequence[sametypesequence_len-1])) {
 			sec_size = idxitem_size - (p-origin_data);
-			for (j=0; j<nWord; j++)
+			for (j=0; j<nWord; j++) {
 				//if (!WordFind[j] && KMP(p, sec_size, SearchWords[j].c_str())!=-1) {
 				if (!WordFind[j] && g_strstr_len(p, sec_size, SearchWords[j].c_str())!=NULL) {
 					WordFind[j] = true;
 					++nfound;
 				}
+			}
 
 			if (nfound==nWord)
 				return true;
