@@ -197,8 +197,9 @@ gchar* DictBase::GetWordData(guint32 idxitem_offset, guint32 idxitem_size)
 		} else {
 			dictdzfile->read(data+sizeof(guint32), idxitem_offset, idxitem_size);
 		}
-		guint32 idxitem_size2 = idxitem_size+sizeof(guint32);
-		memcpy(data, &idxitem_size2, sizeof(guint32));
+		//guint32 idxitem_size2 = idxitem_size+sizeof(guint32);
+		//memcpy(data, &idxitem_size2, sizeof(guint32));
+		*reinterpret_cast<guint32 *>(data)=idxitem_size+sizeof(guint32);
 	}
 	g_free(cache[cache_cur].data);
 
