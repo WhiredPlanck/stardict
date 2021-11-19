@@ -1,7 +1,7 @@
 COMMONLIB_CPPFLAGS = -I$(top_srcdir)/$(COMMONLIB_INCLUDE_DIR)
 COMMONLIB_LIB = $(top_builddir)/$(COMMONLIB_LIBRARY)
 
-EXTRA_DIST = dict_client.cpp dict_client.h kmp.cpp kmp.h
+EXTRA_DIST = dict_client.cpp dict_client.h kmp.cpp.bak kmp.h.bak
 
 noinst_LTLIBRARIES = libstardict.la
 
