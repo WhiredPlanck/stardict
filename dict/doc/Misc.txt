@@ -29,13 +29,3 @@ src/lib/data.cpp
 *reinterpret_cast<guint32 *>(data)=idxitem_size;
 ========
 
-========
-2.4.9
-
-src/lib/data.cpp
-
-guint32 idxitem_size2 = idxitem_size+sizeof(guint32);
-memcpy(data, &idxitem_size2, sizeof(guint32));
-改成：
-memcpy(data, &idxitem_size, sizeof(guint32));
-========
