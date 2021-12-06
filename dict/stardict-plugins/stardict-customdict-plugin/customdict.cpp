@@ -66,7 +66,6 @@ static void my_strstrip(gchar *str)
 
 static char *my_build_dictdata(char type, const char *definition)
 {
-	size_t fread_size;
 	guint32 size;
 	char *data;
 	if (g_ascii_isupper(type)) {
@@ -95,6 +94,7 @@ static char *my_build_dictdata(char type, const char *definition)
 				p++;
 				*((guint32 *)p) = g_htonl(stats.st_size);
 				p += sizeof(guint32);
+				size_t fread_size;
 				fread_size = fread(p, 1, stats.st_size, file);
 				if (fread_size != (size_t)stats.st_size) {
 					g_print("fread error!\n");
