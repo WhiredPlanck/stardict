@@ -2111,8 +2111,14 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_cell_edited(GtkCellRendererText *c
 			const gchar *error_msg = NULL;
 			p = strstr(new_text, "%s");
 			if (p) {
+				gchar *error_msg1 = _("The website search link contain more than 1 \"%\" characters!");
 				if (strchr(p+2, '%')) {
-					error_msg = _("The website search link contain more than 1 \"%\" characters!");
+					error_msg = error_msg1;
+				} else {
+					std::string before_str(new_text, p-new_text);
+					if (strchr(before_str.c_str(), '%')) {
+						error_msg = error_msg1;
+					}
 				}
 			} else {
 				error_msg = _("The website search link should contain a \"%s\" string for querying a word.");
