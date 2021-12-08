@@ -2025,13 +2025,12 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_add_button_clicked(GtkWidget *widg
 			const gchar *p;
 			p = strstr(website_searchlink, "%s");
 			if (p) {
-				gchar *error_msg1 = _("The website search link contain more than 1 \"%\" characters!");
 				if (strchr(p+2, '%')) {
-					error_msg = error_msg1;
+					error_msg = _("The website search link contain more than 1 \"%\" characters!");
 				} else {
 					std::string before_str(website_searchlink, p-website_searchlink);
 					if (strchr(before_str.c_str(), '%')) {
-						error_msg = error_msg1;
+						error_msg = _("The website search link contain more than 1 \"%\" characters!");
 					}
 				}
 			} else {
@@ -2111,13 +2110,12 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_cell_edited(GtkCellRendererText *c
 			const gchar *error_msg = NULL;
 			p = strstr(new_text, "%s");
 			if (p) {
-				gchar *error_msg1 = _("The website search link contain more than 1 \"%\" characters!");
 				if (strchr(p+2, '%')) {
-					error_msg = error_msg1;
+					error_msg = _("The website search link contain more than 1 \"%\" characters!");
 				} else {
 					std::string before_str(new_text, p-new_text);
 					if (strchr(before_str.c_str(), '%')) {
-						error_msg = error_msg1;
+						error_msg = _("The website search link contain more than 1 \"%\" characters!");
 					}
 				}
 			} else {
