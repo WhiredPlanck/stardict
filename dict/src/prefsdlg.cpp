@@ -2025,8 +2025,14 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_add_button_clicked(GtkWidget *widg
 			const gchar *p;
 			p = strstr(website_searchlink, "%s");
 			if (p) {
+				gchar *error_msg1 = _("The website search link contain more than 1 \"%\" characters!");
 				if (strchr(p+2, '%')) {
-					error_msg = _("The website search link contain more than 1 \"%\" characters!");
+					error_msg = error_msg1;
+				} else {
+					std::string before_str(website_searchlink, p-website_searchlink);
+					if (strchr(before_str.c_str(), '%')) {
+						error_msg = error_msg1;
+					}
 				}
 			} else {
 				error_msg = _("The website search link should contain a \"%s\" string for querying a word.");
