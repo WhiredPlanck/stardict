@@ -21,13 +21,14 @@
 #define UTILS_H
 
 #include <glib.h>
-#include <string>
-#include <vector>
 #include <cstring>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #ifdef _WIN32
 #include <windows.h>
 #endif
+
+#include <vector>
+#include <string>
 
 
 #if defined(ARM) || defined(__sparc__)

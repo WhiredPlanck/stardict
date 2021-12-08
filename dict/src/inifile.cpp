@@ -22,7 +22,11 @@
 #  include "config.h"
 #endif
 
-#include <vector>
+#include "lib/utils.h"
+#include "libcommon.h"
+
+#include "inifile.h"
+
 #include <cerrno>
 #include <cstring>
 #include <cstdlib>
@@ -30,10 +34,8 @@
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 
-#include "lib/utils.h"
-#include "libcommon.h"
+#include <vector>
 
-#include "inifile.h"
 
 static const guchar NEW_STRING_SEP = 1;
 //static const guchar OLD_STRING_SEP = 0xFF;
