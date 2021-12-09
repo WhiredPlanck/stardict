@@ -627,9 +627,9 @@ void TopWin::on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 		NULL
 	};
 	const gchar *documenters[] = {
-		"Hu Zheng <huzheng001@gmail.com>",
-		"Will Robinson <wsr23@stanford.edu>",
-		"Anthony Fok <foka@debian.org>",
+		(gchar *)"Hu Zheng <huzheng001@gmail.com>",
+		(gchar *)"Will Robinson <wsr23@stanford.edu>",
+		(gchar *)"Anthony Fok <foka@debian.org>",
 		NULL
 	};
 	gchar *translator_credits = _("translator_credits");
