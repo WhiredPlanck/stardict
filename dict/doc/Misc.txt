@@ -1,6 +1,7 @@
 星际译王产品线：
 ========
 2.4.8
+2.4.8.1
 2.4.9
 2.4.10 开发中。
 3.0.1
@@ -15,17 +16,4 @@
 4.0.0 计划中。
 4.0.1 计划中。
 =======
-
-
-Bugs：
-
-========
-2.4.8
-
-src/lib/data.cpp
-
-*reinterpret_cast<guint32 *>(data)=idxitem_size+sizeof(guint32);
-改成：
-*reinterpret_cast<guint32 *>(data)=idxitem_size;
-========
 
