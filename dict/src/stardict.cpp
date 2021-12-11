@@ -250,17 +250,23 @@ void AppCore::ShowPangoTips(const char *word, const char *text)
 void AppCore::Create(const gchar *queryword)
 {
 	if (conf->get_bool_at("dictionary/use_custom_font")) {
-		const std::string &custom_font(conf->get_string_at("dictionary/custom_font"));
+		const std::string &custom_font = conf->get_string_at("dictionary/custom_font");
 
-		if (!custom_font.empty())	{
+		if (!custom_font.empty()) {
+#if GTK_MAJOR_VERSION >= 3
+			std::string px_font;
+			font_name_to_px_font(custom_font.c_str(), px_font);
+			gchar *aa = g_strdup_printf("* {font: %s;}", px_font.c_str());
+			GtkCssProvider *css_provider = gtk_css_provider_new();
+			gtk_css_provider_load_from_data(css_provider, aa, -1, NULL);
+			//gchar *ab = gtk_css_provider_to_string(css_provider);
+			//g_printf("%s\n", ab);
+			//g_free(ab);
+#else
 			gchar *aa =
 				g_strdup_printf("style \"custom-font\" { font_name= \"%s\" }\n"
 						"class \"GtkWidget\" style \"custom-font\"\n",
 						custom_font.c_str());
-#if GTK_MAJOR_VERSION >= 3
-			GtkCssProvider *css_provider = gtk_css_provider_get_default();
-			gtk_css_provider_load_from_data(css_provider, aa, -1, NULL);
-#else
 			gtk_rc_parse_string(aa);
 #endif
 			g_free(aa);

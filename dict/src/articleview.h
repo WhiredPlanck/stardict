@@ -83,6 +83,7 @@ public:
 	void connect_on_link(const sigc::slot<void, const std::string &>& s);
 	unsigned int get_bookindex(void) { return bookindex; }
 	void set_bookname_style(BookNameStyle style) { bookname_style = style; }
+	void set_font_name(const gchar *fontname);
 private:
 	struct ParseResultItemWithMark;
 

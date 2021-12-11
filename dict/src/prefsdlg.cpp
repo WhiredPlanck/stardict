@@ -517,13 +517,16 @@ void PrefsDlg::setup_dictionary_scan_page()
 
 void PrefsDlg::change_font_for_all_widgets(const std::string& fontname)
 {
+#if GTK_MAJOR_VERSION >= 3
+	std::string px_font;
+	font_name_to_px_font(fontname.c_str(), px_font);
+	gchar *aa = g_strdup_printf("* {font: %s;}", px_font.c_str());
+	GtkCssProvider *css_provider = gtk_css_provider_new();
+	gtk_css_provider_load_from_data(css_provider, aa, -1, NULL);
+#else
 	gchar *aa =
 		g_strdup_printf("style \"custom-font\" { font_name= \"%s\" }\n"
 										"class \"GtkWidget\" style \"custom-font\"\n", fontname.c_str());
-#if GTK_MAJOR_VERSION >= 3
-	GtkCssProvider *css_provider = gtk_css_provider_get_default();
-	gtk_css_provider_load_from_data(css_provider, aa, -1, NULL);
-#else
 	gtk_rc_parse_string(aa);
 	GdkScreen *screen = gtk_window_get_screen(parent_window);
 	GtkSettings *settings=gtk_settings_get_for_screen(screen);
@@ -535,20 +538,38 @@ void PrefsDlg::change_font_for_all_widgets(const std::string& fontname)
 #endif
 }
 
-void PrefsDlg::on_setup_dictionary_font_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
+void PrefsDlg::change_font_for_textview(const std::string& fontname)
 {
-  gboolean b = gtk_toggle_button_get_active(button);
-  gtk_widget_set_sensitive(oPrefsDlg->custom_font_hbox, b);
-  conf->set_bool_at("dictionary/use_custom_font", b);
-	if (b) {
-		const std::string &custom_font=
-			conf->get_string_at("dictionary/custom_font");
-		oPrefsDlg->change_font_for_all_widgets(custom_font);
-	} else
-		oPrefsDlg->change_font_for_all_widgets("");
+	gpAppFrame->oMidWin.oTextWin.set_font_name(fontname.c_str());
 }
 
-void PrefsDlg::on_setup_dictionary_font_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg)
+void PrefsDlg::on_setup_dictionary_custom_font_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
+{
+  gboolean b = gtk_toggle_button_get_active(button);
+  gtk_widget_set_sensitive(oPrefsDlg->custom_font_vbox, b);
+  conf->set_bool_at("dictionary/use_custom_font", b);
+	if (b) {
+		const std::string &custom_font = conf->get_string_at("dictionary/custom_font");
+		oPrefsDlg->change_font_for_all_widgets(custom_font);
+	} else {
+		oPrefsDlg->change_font_for_all_widgets("");
+	}
+}
+
+void PrefsDlg::on_setup_dictionary_textview_font_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
+{
+  gboolean b = gtk_toggle_button_get_active(button);
+  gtk_widget_set_sensitive(oPrefsDlg->textview_font_vbox, b);
+  conf->set_bool_at("dictionary/use_textview_font", b);
+	if (b) {
+		const std::string &textview_font = conf->get_string_at("main_window/textview_font");
+		oPrefsDlg->change_font_for_textview(textview_font);
+	} else {
+		oPrefsDlg->change_font_for_textview("");
+	}
+}
+
+void PrefsDlg::on_setup_dictionary_custom_font_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg)
 {
 #if GTK_MAJOR_VERSION >= 3
 	GtkWidget *dlg = gtk_font_chooser_dialog_new(_("Choose dictionary font"), GTK_WINDOW (oPrefsDlg->window));
@@ -587,6 +608,45 @@ void PrefsDlg::on_setup_dictionary_font_button_clicked(GtkWidget *widget, PrefsD
   gtk_widget_destroy (dlg);
 }
 
+void PrefsDlg::on_setup_dictionary_textview_font_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg)
+{
+#if GTK_MAJOR_VERSION >= 3
+	GtkWidget *dlg = gtk_font_chooser_dialog_new(_("Choose dictionary font"), GTK_WINDOW (oPrefsDlg->window));
+#else
+	GtkWidget *dlg = gtk_font_selection_dialog_new(_("Choose dictionary font"));
+	gtk_window_set_transient_for (GTK_WINDOW (dlg), GTK_WINDOW (oPrefsDlg->window));
+#endif
+	const gchar *text = gtk_button_get_label(GTK_BUTTON(widget));
+	if (strcmp(text,_("Choose"))) {
+#if GTK_MAJOR_VERSION >= 3
+		gtk_font_chooser_set_font(GTK_FONT_CHOOSER(dlg), text);
+#else
+		gtk_font_selection_dialog_set_font_name(GTK_FONT_SELECTION_DIALOG(dlg), text);
+#endif
+	}
+#if GTK_MAJOR_VERSION >= 3
+	gtk_font_chooser_set_preview_text(GTK_FONT_CHOOSER(dlg),_("TextView font"));
+#else
+	gtk_font_selection_dialog_set_preview_text(GTK_FONT_SELECTION_DIALOG(dlg),_("TextView font"));
+#endif
+  gint result = gtk_dialog_run (GTK_DIALOG (dlg));
+  if (result==GTK_RESPONSE_OK) {
+#if GTK_MAJOR_VERSION >= 3
+	gchar *font_name = gtk_font_chooser_get_font(GTK_FONT_CHOOSER(dlg));
+#else
+	gchar *font_name = gtk_font_selection_dialog_get_font_name(GTK_FONT_SELECTION_DIALOG(dlg));
+#endif
+    if (font_name) {
+      gtk_button_set_label(GTK_BUTTON(widget),font_name);
+      conf->set_string_at("main_window/textview_font", std::string(font_name));
+    }
+    if (font_name && font_name[0]) {
+			oPrefsDlg->change_font_for_textview(font_name);
+    }
+  }
+  gtk_widget_destroy (dlg);
+}
+
 void PrefsDlg::setup_dictionary_font_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Font"), GTK_STOCK_SELECT_FONT);
@@ -596,37 +656,79 @@ void PrefsDlg::setup_dictionary_font_page()
 	GtkWidget *vbox1 = gtk_vbox_new(false,6);
 #endif
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
-	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Use custom font."));
-	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
-	bool use_custom_font=
-		conf->get_bool_at("dictionary/use_custom_font");
 
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button),
-															 use_custom_font);
-	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_font_ckbutton_toggled), this);
 #if GTK_MAJOR_VERSION >= 3
-	custom_font_hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
+	GtkWidget *vbox2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 #else
-	custom_font_hbox = gtk_hbox_new(false, 12);
+	GtkWidget *vbox2 = gtk_vbox_new(false,6);
 #endif
-	gtk_box_pack_start(GTK_BOX(vbox1),custom_font_hbox,false,false,0);
-	gtk_widget_set_sensitive(custom_font_hbox, use_custom_font);
+	gtk_box_pack_start(GTK_BOX(vbox1),vbox2,false,false, 0);
+
+	bool use_custom_font = conf->get_bool_at("dictionary/use_custom_font");
+
+	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Use custom dictionary font."));
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), use_custom_font);
+	gtk_box_pack_start(GTK_BOX(vbox2),check_button,false,false,0);
+	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_custom_font_ckbutton_toggled), this);
+
+#if GTK_MAJOR_VERSION >= 3
+	custom_font_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 12);
+#else
+	custom_font_vbox = gtk_vbox_new(false, 12);
+#endif
+	gtk_box_pack_start(GTK_BOX(vbox2),custom_font_vbox,false,false,5);
+	gtk_widget_set_sensitive(custom_font_vbox, use_custom_font);
+
 	GtkWidget *label=gtk_label_new(NULL);
 	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("Dictionary _font:"));
-	gtk_box_pack_start(GTK_BOX(custom_font_hbox),label,false,false,0);
+	gtk_box_pack_start(GTK_BOX(custom_font_vbox),label,false,false,0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
 	GtkWidget *button;
-	const std::string &custom_font=
-		conf->get_string_at("dictionary/custom_font");
-
-	if (!custom_font.empty())
+	const std::string &custom_font = conf->get_string_at("dictionary/custom_font");
+	if (!custom_font.empty()) {
 		button = gtk_button_new_with_label(custom_font.c_str());
-	else
+	} else {
 		button=gtk_button_new_with_label(_("Choose"));
-
+	}
 	gtk_label_set_mnemonic_widget(GTK_LABEL(label), button);
-	gtk_box_pack_start(GTK_BOX(custom_font_hbox),button,false,false,0);
-	g_signal_connect (G_OBJECT (button), "clicked", G_CALLBACK (on_setup_dictionary_font_button_clicked), this);
+	gtk_box_pack_start(GTK_BOX(custom_font_vbox),button,false,false,0);
+	g_signal_connect (G_OBJECT (button), "clicked", G_CALLBACK (on_setup_dictionary_custom_font_button_clicked), this);
+
+#if GTK_MAJOR_VERSION >= 3
+	GtkWidget *vbox3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+#else
+	GtkWidget *vbox3 = gtk_vbox_new(false,6);
+#endif
+	gtk_box_pack_start(GTK_BOX(vbox1),vbox3,false,false, 0);
+
+	bool use_textview_font = conf->get_bool_at("dictionary/use_textview_font");
+
+	check_button = gtk_check_button_new_with_mnemonic(_("_Use textview font."));	
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), use_textview_font);
+	gtk_box_pack_start(GTK_BOX(vbox3),check_button,false,false,0);
+	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_textview_font_ckbutton_toggled), this);
+
+#if GTK_MAJOR_VERSION >= 3
+	textview_font_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 12);
+#else
+	textview_font_vbox = gtk_vbox_new(false, 12);
+#endif
+	gtk_box_pack_start(GTK_BOX(vbox3),textview_font_vbox,false,false,5);
+	gtk_widget_set_sensitive(textview_font_vbox, use_textview_font);
+
+	label=gtk_label_new(NULL);
+	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("_TextView font:"));
+	gtk_box_pack_start(GTK_BOX(textview_font_vbox),label,false,false,0);
+	gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
+	const std::string &textview_font = conf->get_string_at("main_window/textview_font");
+	if (!custom_font.empty()) {
+		button = gtk_button_new_with_label(textview_font.c_str());
+	} else {
+		button=gtk_button_new_with_label(_("Choose"));
+	}
+	gtk_label_set_mnemonic_widget(GTK_LABEL(label), button);
+	gtk_box_pack_start(GTK_BOX(textview_font_vbox),button,false,false,0);
+	g_signal_connect (G_OBJECT (button), "clicked", G_CALLBACK (on_setup_dictionary_textview_font_button_clicked), this);
 }
 
 void PrefsDlg::on_setup_dictionary_cache_CreateCacheFile_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
@@ -2701,6 +2803,8 @@ void PrefsDlg::Close()
 #ifndef CONFIG_GPE
 void PrefsDlg::resize_categories_tree(void)
 {
+#if GTK_MAJOR_VERSION >= 3
+#else
   //this is hack for prevet horizontaly scrolling
   //if you know how it make better, just write
   GtkRequisition rtv, rsw;
@@ -2712,5 +2816,6 @@ void PrefsDlg::resize_categories_tree(void)
 	gtk_widget_size_request(GTK_SCROLLED_WINDOW(categories_window)->vscrollbar, &rsw);
 #endif
   gtk_widget_set_size_request(categories_window, rtv.width+rsw.width+25, -1);
+#endif
 }
 #endif

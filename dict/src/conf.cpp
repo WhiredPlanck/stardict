@@ -105,6 +105,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/use_custom_font", false);
 #endif
 #endif
+	add_entry("/apps/stardict/preferences/dictionary/use_textview_font", false);
 #if defined(_WIN32) || defined(CONFIG_DARWIN)
 	add_entry("/apps/stardict/preferences/network/enable_netdict", true);
 #else
@@ -119,6 +120,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/main_window/input_word", std::string());
 	add_entry("/apps/stardict/preferences/main_window/skin", std::string());
 	add_entry("/apps/stardict/preferences/main_window/hide_on_startup", false);
+	add_entry("/apps/stardict/preferences/main_window/textview_font", std::string());
 	add_entry("/apps/stardict/preferences/main_window/keep_above", false);
 	add_entry("/apps/stardict/preferences/main_window/search_while_typing", true);
 	add_entry("/apps/stardict/preferences/main_window/word_change_timeout", 300);

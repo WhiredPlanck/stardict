@@ -2089,9 +2089,23 @@ void TextWin::set_bookname_style(BookNameStyle style)
 	}
 }
 
+void TextWin::set_font_name(const gchar *fontname)
+{
+	if (view.get()) {
+		view->set_font_name(fontname);
+	}
+}
+
 void TextWin::Create(GtkWidget *vbox)
 {
 	view.reset(new ArticleView(GTK_BOX(vbox), (BookNameStyle)conf->get_int_at("dictionary/bookname_style")));
+
+	if (conf->get_bool_at("dictionary/use_textview_font")) {
+		const std::string &textview_font(conf->get_string_at("main_window/textview_font"));
+		if (!textview_font.empty()) {
+			view->set_font_name(textview_font.c_str());
+		}
+	}
 
 	view->connect_on_link(sigc::mem_fun(gpAppFrame, &AppCore::on_link_click));
 	g_signal_connect(G_OBJECT(view->widget()), "button_press_event",

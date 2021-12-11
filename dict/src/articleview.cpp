@@ -521,6 +521,11 @@ void ArticleView::connect_on_link(const sigc::slot<void, const std::string &>& s
 	pango_view_->on_link_click_.connect(s);
 }
 
+void ArticleView::set_font_name(const gchar *fontname)
+{
+	pango_view_->set_font_name(fontname);
+}
+
 void ArticleView::append_resource_file_list(const gchar *p)
 {
 	const gchar *b = p, *e;

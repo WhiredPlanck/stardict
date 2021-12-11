@@ -40,7 +40,8 @@ private:
   GtkWidget *categories_tree;
   GtkTreeModel *categories_tree_model;
 #endif
-  GtkWidget *custom_font_hbox;
+  GtkWidget *custom_font_vbox;
+  GtkWidget *textview_font_vbox;
   GtkWidget *scan_modifier_key_vbox;
   GtkWidget *collation_hbox;
   GtkWidget *tts_textview;
@@ -107,8 +108,10 @@ private:
   static gboolean selection_init (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, PrefsDlg *oPrefsDlg);
   static void categories_tree_realize (GtkWidget *widget, PrefsDlg *oPrefsDlg);
 #endif
-  static void on_setup_dictionary_font_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
-  static void on_setup_dictionary_font_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
+  static void on_setup_dictionary_custom_font_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
+  static void on_setup_dictionary_textview_font_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
+  static void on_setup_dictionary_custom_font_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
+  static void on_setup_dictionary_textview_font_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_scan_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 #ifdef _WIN32
   static void on_setup_dictionary_scan_clipboard_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
@@ -174,6 +177,7 @@ private:
 #endif
 
   void change_font_for_all_widgets(const std::string& fontname);
+  void change_font_for_textview(const std::string& fontname);
 public:
   GtkWidget *window;
   PrefsDlg(GtkWindow *parent, GdkPixbuf *logo, const std::list<std::string>& key_combs);

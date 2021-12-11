@@ -50,6 +50,46 @@
 #include "utils.h"
 
 
+void fontname_to_family_and_size(const gchar *fontname, std::string &family, gint &size)
+{
+	const gchar *a = strrchr(fontname, ' ');
+	if (a) {
+		family.assign(fontname, a - fontname);
+		a++;
+		size = atoi(a);
+	}
+}
+
+/*
+button, entry {
+  color: #ff00ea;
+  font: 12px "Comic Sans";
+}
+
+font_name:
+Comic Sans 12
+
+px_font:
+12px "Comic Sans"
+
+*/
+
+#if GTK_MAJOR_VERSION >= 3
+void font_name_to_px_font(const char *font_name, std::string &px_font)
+{
+	const char *ab;
+	ab = strrchr(font_name, ' ');
+	if (ab) {
+		std::string str2(font_name, ab-font_name);
+		ab++;
+		px_font = ab;
+		px_font += "px \"";
+		px_font += str2;
+		px_font += '\"';
+	}
+}
+#endif
+
 void ProcessGtkEvent()
 {
   while (gtk_events_pending())

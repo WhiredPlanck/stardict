@@ -30,7 +30,6 @@
 #include <vector>
 #include <string>
 
-
 #if defined(ARM) || defined(__sparc__)
 static inline guint32 get_uint32(const gchar *addr)
 {
@@ -42,6 +41,8 @@ static inline guint32 get_uint32(const gchar *addr)
 #define get_uint32(x) *reinterpret_cast<const guint32 *>(x)
 #endif
 
+extern void fontname_to_family_and_size(const gchar *fontname, std::string &family, gint &size);
+extern void font_name_to_px_font(const char *font_name, std::string &px_font);
 extern void ProcessGtkEvent();
 
 extern std::string combnum2str(gint comb_code);

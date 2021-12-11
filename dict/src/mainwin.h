@@ -289,6 +289,7 @@ public:
   gboolean Find (const gchar *text, gboolean start);
 	bool IsSearchPanelHasFocus() { return gtk_widget_has_focus(GTK_WIDGET(eSearch)); }
 	void set_bookname_style(BookNameStyle style);
+	void set_font_name(const gchar *fontname);
 
 	void ShowSearchPanel();
 	void HideSearchPanel();

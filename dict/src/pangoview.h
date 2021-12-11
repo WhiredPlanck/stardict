@@ -52,6 +52,8 @@ public:
 	//TODO: make it not public and introduce function to work with it
 	virtual GtkWidget *widget() = 0;
 
+	virtual void set_font_name(const gchar *fontname) = 0;
+
 	virtual std::string get_text() = 0;
 	void set_text(const char *str);
 	void append_text(const char *str);

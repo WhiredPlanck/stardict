@@ -41,6 +41,8 @@ public:
 	GtkWidget *widget() { return GTK_WIDGET(textview_); }
 	GtkTextView *get_text_view() { return textview_; }
 
+	void set_font_name(const gchar *fontname);
+
 	std::string get_text();
 	void insert_pango_text(const char *str, const char *where_mark_name, 
 		int char_offset = 0);
@@ -277,6 +279,8 @@ class LabelPangoWidget : public PangoWidgetBase {
 public:
 	LabelPangoWidget();
 	GtkWidget *widget() { return GTK_WIDGET(label_); }
+
+	void set_font_name(const gchar *fontname);
 
 	std::string get_text();
 	void insert_pango_text(const char *str, const char *where_mark_name, 
@@ -1198,6 +1202,32 @@ void LabelPangoWidget::insert_pixbuf(GdkPixbuf *pixbuf, const char *label,
 {
 	insert_pango_text(get_pixbuf_replace_pango_text(pixbuf, label).c_str(), 
 		where_mark_name, char_offset);
+}
+
+void TextPangoWidget::set_font_name(const gchar *fontname)
+{
+	if (textview_) {
+		std::string family;
+		gint size = 0;
+		fontname_to_family_and_size(fontname, family, size);
+		PangoFontDescription *font_desc = pango_font_description_new();
+		if (!family.empty()) {
+			pango_font_description_set_family(font_desc, family.c_str());
+		}
+		if (size != 0) {
+			pango_font_description_set_size(font_desc, size);
+		}
+#if GTK_MAJOR_VERSION >= 3
+		gtk_widget_override_font(GTK_WIDGET(textview_), font_desc);  // Fuck! Have bug!
+#else
+		gtk_widget_modify_font(GTK_WIDGET(textview_), font_desc);  // Fuck! Have bug!
+#endif
+		pango_font_description_free(font_desc);
+	}
+}
+
+void LabelPangoWidget::set_font_name(const gchar *fontname)
+{
 }
 
 void TextPangoWidget::append_widget(GtkWidget *widget)
