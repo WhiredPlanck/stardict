@@ -9,6 +9,8 @@ AM_INIT_AUTOMAKE([tar-ustar dist-xz])
 AC_CONFIG_HEADERS([config.h])
 AH_BOTTOM([#include <config-custom.h>])
 
+PKG_PROG_PKG_CONFIG
+
 AC_CONFIG_MACRO_DIRS([m4])
 LT_INIT
 
