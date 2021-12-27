@@ -79,7 +79,7 @@ void wnobj::draw_text(cairo_t *cr, double x, double y, double w, double h, Pango
 {
 	cairo_save(cr);
 	cairo_set_source_rgba(cr, 1, 1, 1, alpha);
-	cairo_rectangle(cr, x, y, w, h);
+	cairo_rectangle(cr, x+0.5, y+0.5, w-1, h-1);
 	cairo_fill(cr);
 	cairo_move_to(cr, x, y);
 	if (highlight) {
