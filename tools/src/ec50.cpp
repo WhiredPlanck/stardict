@@ -972,6 +972,10 @@ void initFile()
 	unsigned short int i;
 	
 	f = fopen("ec50.dat", "r");
+	if (!f) {
+		printf("Run ./ec50 ec50.dat\n");
+		exit(0);
+	}
 
 	fseek(f, 0x0008e000, SEEK_SET);
 	len = 4;

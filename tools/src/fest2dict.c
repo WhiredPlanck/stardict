@@ -41,6 +41,9 @@ if (ar) strcpy(sp[nn++], "r");
 
 char IsConsonant(char *p)
 {
+if (!p) {
+	return 0;
+}
 return (strchr("bcdfghjklmnpqrstvwxz", *p) ||
 (*p=='\xC5' && p[1]=='\x8B') ||
 (*p=='\xCA' && p[1]=='\x83') ||
