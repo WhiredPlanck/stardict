@@ -153,12 +153,12 @@ int GeneratorBase::run(int argc, char *argv[])
 	logger_->set_verbosity(verbose);
 
 	if (show_version) {
-		g_message(version_.c_str());
+		g_message("%s\n", version_.c_str());
 		g_message("\n");
 		return EXIT_SUCCESS;
 	}
 	if (show_fmt) {
-		g_message(format_.c_str());
+		g_message("%s\n", format_.c_str());
 		g_message("\n");
 		return EXIT_SUCCESS;
 	}
@@ -224,7 +224,7 @@ bool GeneratorBase::parse_option(const std::string& optarg)
 		for (StringMap::iterator it = generator_options_.begin();
 			it != generator_options_.end(); ++it)
 		{
-			g_critical(it->first.c_str()); 
+			g_critical("%s\n", it->first.c_str()); 
 			g_critical("\n");
 		}
 		return false;

@@ -196,7 +196,7 @@ bool ParserBase::parse_option(const std::string& optarg)
 		for (StringMap::iterator it = parser_options_.begin();
 			it != parser_options_.end(); ++it)
 		{
-			g_critical(it->first.c_str());
+			g_critical("%s\n", it->first.c_str());
 			g_critical("\n");
 		}
 		return false;
@@ -243,7 +243,7 @@ int ParserBase::run(int argc, char *argv[])
 
 
 	if (show_version) {
-		g_message(parser_info_["version"].c_str());
+		g_message("%s\n", parser_info_["version"].c_str());
 		g_message("\n");
 		return EXIT_SUCCESS;
 	}
@@ -251,7 +251,7 @@ int ParserBase::run(int argc, char *argv[])
 		return is_my_format(get_impl(url)) ? EXIT_SUCCESS : EXIT_FAILURE;
 
 	if (show_fmt) {
-		g_message(parser_info_["format"].c_str());
+		g_message("%s\n", parser_info_["format"].c_str());
 		g_message("\n");
 		return EXIT_SUCCESS;
 	}

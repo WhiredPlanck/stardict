@@ -37,23 +37,23 @@ void Logger::log(const gchar *log_domain,
 	case G_LOG_FLAG_FATAL:
 	case G_LOG_LEVEL_ERROR:
 	case G_LOG_LEVEL_CRITICAL:
-		g_critical(message);
+		g_critical("%s\n", message);
 		break;
 	case G_LOG_LEVEL_WARNING:
 		if (md->verbose_ > 0)
-			g_critical(message);
+			g_critical("%s\n", message);
 		break;
 	case G_LOG_LEVEL_MESSAGE:
 		if (md->verbose_ > 1)
-			g_critical(message);
+			g_critical("%s\n", message);
 		break;
 	case G_LOG_LEVEL_INFO:
 		if (md->verbose_ > 2)
-			g_critical(message);
+			g_critical("%s\n", message);
 		break;
 	case G_LOG_LEVEL_DEBUG:
 		if (md->verbose_ > 3)
-			g_critical(message);
+			g_critical("%s\n", message);
 		break;
 	default:
 		/*nothing*/break;

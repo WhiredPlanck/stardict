@@ -300,7 +300,7 @@ namespace {
 
 			for (lang = short_lang_table.begin(); lang != short_lang_table.end(); ++lang)
 			{
-				g_critical(lang->first);
+				g_critical("%s\n", lang->first);
 				g_critical("\t\n");
 			}
 			return false;
@@ -360,7 +360,7 @@ namespace {
 				name = index_language = contents_language = from_codeset = "";
 				if (parse(map_file, false, true) != EXIT_SUCCESS) {
 					g_critical("Error during parse abbreviation this file: ");
-					g_critical(it->c_str());
+					g_critical("%s\n", it->c_str());
 					g_critical("\n");
 					break;
 				}
@@ -723,7 +723,7 @@ namespace {
 					for (Str2StrTable::iterator cp = code_page_table.begin();
 						cp != code_page_table.end(); ++cp)
 					{
-						g_critical(cp->first);
+						g_critical("%s\n", cp->first);
 						g_critical("\n");
 					}
 					return false;

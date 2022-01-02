@@ -57,7 +57,7 @@ File& File::printf(const char *fmt, ...)
 	va_start(ap, fmt);
 	if (stream_)
 	{
-		g_message(fmt);
+		g_message("%s\n", fmt);
 	}
 	va_end(ap);
 
