@@ -10,6 +10,7 @@ ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = \
 	TODO 			\
 	INSTALL			\
+	INSTALL.txt		\
 	ABOUT-NLS		\
 	autogen.sh		\
 	stardict-fedora.spec	\
