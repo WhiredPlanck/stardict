@@ -1,4 +1,14 @@
-2021.12.
+2022.
+StarDict-3.0.1.3 (Bodhisatta 菩萨版) released.
+Support compress dictionary format!
+Some small changes!
+
+2022.
+StarDict-2.4.10 (Love-Cher 我爱王雪寒版) released.
+Support compress dictionary format!
+Some small changes!
+
+2022.1.
 StarDict-3.0.7 (MasterWork 传世之作) released.
 Port to gtk3!
 Add some babylon dictionaries.
@@ -13,7 +23,7 @@ Add YouDao.com netdict plugin.
 Thanks GreenLunar for the Hebrew translation!
 Many small changes.
 
-2021.12.
+2022.1.
 StarDict-3.0.6.3 (Epic 史诗版) released.
 Provide Windows exe version.
 Source code is almost the same as StarDict-3.0.7!
