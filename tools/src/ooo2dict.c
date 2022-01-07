@@ -78,7 +78,10 @@ if (ch == NULL) {
 	printf("fgets error!\n");
 }
 if ((p=strchr(lang, '\n'))!=NULL) *p=0;
-if (*lang==0) strcpy(lang, "WordNet_English");
+if (*lang==0) {
+	const size_t aa = sizeof("WordNet_English");
+	strncpy(lang, "WordNet_English", aa);
+}
 F=fopen((argc>1)? argv[1]: "/usr/share/myspell/dicts/th_en_US_v2.dat", "rt");
 if (!F)
    {
@@ -162,9 +165,9 @@ qsort(arr, nn, sizeof(PAIR), cmp);
 
 sprintf(fname, "/usr/share/stardict/dic/ooothes_%s.", lang);
 ext=strchr(fname, 0);
-strcpy(ext, "idx");
+strncpy(ext, "idx", 4);
 F2=fopen(fname, "wb");
-strcpy(ext, "dict");
+strncpy(ext, "dict", 5);
 F3=fopen(fname, "wb");
 
 for (i=0; i<nn; i++)
@@ -188,7 +191,7 @@ for (i=0; i<nn; i++)
    }
 
 fclose(F3);
-strcpy(ext, "ifo");
+strncpy(ext, "ifo", 4);
 F3=fopen(fname, "wt");
 
 printf("\nTotal %li entries written.\n", nn);

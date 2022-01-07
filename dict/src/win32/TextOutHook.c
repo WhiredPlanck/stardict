@@ -182,7 +182,7 @@ static void GetWordTextOutHook (TEverythingParams *TP)
 			TCHAR *p = StrStr(buffer, buffer2);
 			if (p) {
 				if (p == buffer) { // FWS_PREFIXTITLE
-					StrCpy(buffer, buffer+lstrlen(buffer2));
+					StrCpy(buffer, buffer+lstrlen(buffer2)); // Bug, need to change to StrNCpy()!
 				} else {
 					*p = TEXT('\0');
 				}
@@ -401,8 +401,9 @@ DLLIMPORT void GetWord (TCurrentMode *P)
 	WndClass = GetWindowType(P->WND, wClassName);
 	p = TryGetWordFromAnyWindow(WndClass, P->WND, P->Pt, &(P->BeginPos));
 	if (p) {
-		assert(strlen(p) < MAX_SCAN_TEXT_SIZE);
-		strcpy(P->MatchedWord, p);
+		const size_t p_len = strlen(p);
+		assert(p_len < MAX_SCAN_TEXT_SIZE);
+		strncpy(P->MatchedWord, p, p_len+1);
 		free(p);
 	} else {
 		P->MatchedWord[0] = '\0';

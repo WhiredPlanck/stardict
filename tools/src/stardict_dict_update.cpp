@@ -29,7 +29,9 @@ void convert_idxfile(gchar *idxfilename)
 {
 	g_print("converting file %s\n", idxfilename);
 	gchar basefilename[256];
-	strcpy(basefilename, idxfilename);
+	//const size_t idxfilename_len = strlen(idxfilename);
+	//strncpy(basefilename, idxfilename, idxfilename_len+1);
+	strcpy(basefilename, idxfilename); // Have bug! Should use strncpy().
 	if (g_str_has_suffix(idxfilename,".idx.gz"))
 		basefilename[strlen(idxfilename)- (sizeof(".idx.gz") -1)] = '\0';
 	else

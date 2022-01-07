@@ -320,8 +320,8 @@ void builddata(gchar *datafilename, glong &wordcount, glong &idxfilesize, glong 
 		*p='\0';
 	gchar idxfilename[256];
 	gchar dicfilename[256];
-	sprintf(idxfilename, "powerword2007_%s.idx", basefilename);
-	sprintf(dicfilename, "powerword2007_%s.dict", basefilename);
+	snprintf(idxfilename, sizeof(idxfilename), "powerword2007_%s.idx", basefilename);
+	snprintf(dicfilename, sizeof(dicfilename), "powerword2007_%s.dict", basefilename);
 	FILE *idxfile = fopen(idxfilename,"w");
 	FILE *dicfile = fopen(dicfilename,"w");
 
@@ -349,7 +349,7 @@ void builddata(gchar *datafilename, glong &wordcount, glong &idxfilesize, glong 
 	synwordcount = array2->len;
 	if (array2->len) {
                 gchar synfilename[256];
-                sprintf(synfilename, "powerword2007_%s.syn", basefilename);
+                snprintf(synfilename, sizeof(synfilename), "powerword2007_%s.syn", basefilename);
                 FILE *synfile = fopen(synfilename,"w");
                 struct _synworditem *psynworditem;
                 gint iFrom, iTo, iThisIndex, cmpint;
@@ -418,7 +418,7 @@ void builddata(gchar *datafilename, glong &wordcount, glong &idxfilesize, glong 
 	g_array_free(array2,TRUE);
 
 	gchar command[1024];
-	sprintf(command, "dictzip %s", dicfilename);
+	snprintf(command, sizeof(command), "dictzip %s", dicfilename);
 	int result;
 	result = system(command);
 	if (result == -1) {
@@ -476,7 +476,7 @@ void buildifo(gchar *xmlfilename, glong wordcount, glong idxfilesize, glong synw
         if (p)
                 *p='\0';
         gchar ifofilename[256];
-        sprintf(ifofilename, "powerword2007_%s.ifo", basefilename);
+        snprintf(ifofilename, sizeof(ifofilename), "powerword2007_%s.ifo", basefilename);
         FILE *ifofile = fopen(ifofilename,"w");
 	gchar *content = g_strdup_printf("StarDict's dict ifo file\nversion=2.4.2\nwordcount=%ld\n%sidxfilesize=%ld\nbookname=%s\nauthor=金山软件股份公司\ndescription=Enjoy!\ndate=2006.12.23\nsametypesequence=k\n", wordcount, synstr, idxfilesize, bookname);
 	g_free(synstr);
@@ -486,50 +486,50 @@ void buildifo(gchar *xmlfilename, glong wordcount, glong idxfilesize, glong synw
 	g_free(buffer);
 
 	gchar command[256];
-        sprintf(command, "mkdir stardict-powerword2007_%s-2.4.2", basefilename);
+        snprintf(command, sizeof(command), "mkdir stardict-powerword2007_%s-2.4.2", basefilename);
 	int result;
         result = system(command);
 	if (result == -1) {
 		g_print("system() error!\n");
 	}
-	sprintf(command, "mv powerword2007_%s.idx stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
+	snprintf(command, sizeof(command), "mv powerword2007_%s.idx stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
 	result = system(command);
 	if (result == -1) {
 		g_print("system() error!\n");
 	}
 	if (synwordcount) {
-		sprintf(command, "mv powerword2007_%s.syn stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
+		snprintf(command, sizeof(command), "mv powerword2007_%s.syn stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
 		result = system(command);
 		if (result == -1) {
 			g_print("system() error!\n");
 		}
 	}
-	sprintf(command, "mv powerword2007_%s.dict.dz stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
+	snprintf(command, sizeof(command), "mv powerword2007_%s.dict.dz stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
         result = system(command);
 	if (result == -1) {
 		g_print("system() error!\n");
 	}
-	sprintf(command, "mv powerword2007_%s.ifo stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
+	snprintf(command, sizeof(command), "mv powerword2007_%s.ifo stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
 	result = system(command);
 	if (result == -1) {
 		g_print("system() error!\n");
 	}
-	sprintf(command, "chmod 644 stardict-powerword2007_%s-2.4.2/*", basefilename);
+	snprintf(command, sizeof(command), "chmod 644 stardict-powerword2007_%s-2.4.2/*", basefilename);
 	result = system(command);
 	if (result == -1) {
 		g_print("system() error!\n");
 	}
-	sprintf(command, "chown root.root -R stardict-powerword2007_%s-2.4.2", basefilename);
+	snprintf(command, sizeof(command), "chown root.root -R stardict-powerword2007_%s-2.4.2", basefilename);
 	result = system(command);
 	if (result == -1) {
 		g_print("system() error!\n");
 	}
-	sprintf(command, "tar -cjvf stardict-powerword2007_%s-2.4.2.tar.bz2 stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
+	snprintf(command, sizeof(command), "tar -cjvf stardict-powerword2007_%s-2.4.2.tar.bz2 stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
 	result = system(command);
 	if (result == -1) {
 		g_print("system() error!\n");
 	}
-	sprintf(command, "rm -rf stardict-powerword2007_%s-2.4.2", basefilename);
+	snprintf(command, sizeof(command), "rm -rf stardict-powerword2007_%s-2.4.2", basefilename);
 	result = system(command);
 	if (result == -1) {
 		g_print("system() error!\n");
@@ -596,18 +596,18 @@ bool convert_utf(gchar *filename, gchar *utffilename)
 	if (strcmp(utffilename, "pwdnnjsj.da3.utf")==0) {
 		g_print("Doing sed process.\n");
 		gchar command[256];
-		sprintf(command, "mv %s %s.bad", utffilename, utffilename);
+		snprintf(command, sizeof(command), "mv %s %s.bad", utffilename, utffilename);
 		int result;
 		result = system(command);
 		if (result == -1) {
 			g_print("system() error!\n");
 		}
-		sprintf(command, "sed -e s//\\ / -e s//\\ / -e s//\\ / -e s/]/]]/ -e s/絔]/]]/ -e s/]/]]/ -e s/╙]/]]/ -e s/輂]/]]/ -e s/]/]]/ -e s/謁]/]]/ %s.bad > %s", utffilename, utffilename);
+		snprintf(command, sizeof(command), "sed -e s//\\ / -e s//\\ / -e s//\\ / -e s/]/]]/ -e s/絔]/]]/ -e s/]/]]/ -e s/╙]/]]/ -e s/輂]/]]/ -e s/]/]]/ -e s/謁]/]]/ %s.bad > %s", utffilename, utffilename);
 		result = system(command);
 		if (result == -1) {
 			g_print("system() error!\n");
 		}
-		sprintf(command, "rm %s.bad", utffilename);
+		snprintf(command, sizeof(command), "rm %s.bad", utffilename);
 		result = system(command);
 		if (result == -1) {
 			g_print("system() error!\n");
@@ -636,7 +636,7 @@ void convert_dir(gchar *dictdirname, std::list<std::string> *TagList, std::list<
 	gchar *utfdatafilename = g_strdup_printf("%s.da3.utf", basename);
 	gchar command[256];
 	gchar *code = encodefilename(xmlfilename);
-	sprintf(command, "iconv -f GBK -t UTF-8 %s -o %s", code, utfxmlfilename);
+	snprintf(command, sizeof(command), "iconv -f GBK -t UTF-8 %s -o %s", code, utfxmlfilename);
 	g_free(code);
 	if (system(command)!=0) {
 		g_print("Error, convert %s to UTF-8 failed!", xmlfilename);
@@ -650,13 +650,13 @@ void convert_dir(gchar *dictdirname, std::list<std::string> *TagList, std::list<
 	builddata(utfdatafilename, wordcount, idxfilesize, synwordcount, TagList, ElementList);
 	buildifo(utfxmlfilename, wordcount, idxfilesize, synwordcount);
 
-	sprintf(command, "rm %s", utfxmlfilename);
+	snprintf(command, sizeof(command), "rm %s", utfxmlfilename);
 	int result;
 	result = system(command);
 	if (result == -1) {
 		g_print("system() error!\n");
 	}
-	sprintf(command, "rm %s", utfdatafilename);
+	snprintf(command, sizeof(command), "rm %s", utfdatafilename);
 	//system(command);
 
 	g_free(xmlfilename);
@@ -676,7 +676,7 @@ void convert(char *dirname)
 	const gchar *filename;
 	gchar fullfilename[256];
 	while ((filename = g_dir_read_name(dir))!=NULL) {
-		sprintf(fullfilename, "%s/%s", dirname, filename);
+		snprintf(fullfilename, sizeof(fullfilename), "%s/%s", dirname, filename);
 		if (g_file_test(fullfilename, G_FILE_TEST_IS_DIR)) {
 			convert_dir(fullfilename, &TagList, &ElementList);
 		} else if (g_str_has_suffix(filename, ".xml")) {

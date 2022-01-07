@@ -403,61 +403,74 @@ egg_virtual_accelerator_name (guint                  accelerator_key,
   accelerator[l] = 0;
   if (accelerator_mods & EGG_VIRTUAL_RELEASE_MASK)
     {
-      strcpy (accelerator + l, text_release);
-      l += sizeof (text_release) - 1;
+      const size_t len = sizeof(text_release);
+      strncpy (accelerator + l, text_release, len);
+      l += len - 1;
     }
   if (accelerator_mods & EGG_VIRTUAL_SHIFT_MASK)
     {
-      strcpy (accelerator + l, text_shift);
-      l += sizeof (text_shift) - 1;
+      const size_t len = sizeof(text_shift);
+      strncpy (accelerator + l, text_shift, len);
+      l += len - 1;
     }
   if (accelerator_mods & EGG_VIRTUAL_CONTROL_MASK)
     {
-      strcpy (accelerator + l, text_control);
-      l += sizeof (text_control) - 1;
+      const size_t len = sizeof(text_control);
+      strncpy (accelerator + l, text_control, len);
+      l += len - 1;
     }
   if (accelerator_mods & EGG_VIRTUAL_ALT_MASK)
     {
-      strcpy (accelerator + l, text_mod1);
-      l += sizeof (text_mod1) - 1;
+      const size_t len = sizeof(text_mod1);
+      strncpy (accelerator + l, text_mod1, len);
+      l += len - 1;
     }
   if (accelerator_mods & EGG_VIRTUAL_MOD2_MASK)
     {
-      strcpy (accelerator + l, text_mod2);
-      l += sizeof (text_mod2) - 1;
+      const size_t len = sizeof(text_mod2);
+      strncpy (accelerator + l, text_mod2, len);
+      l += len - 1;
     }
   if (accelerator_mods & EGG_VIRTUAL_MOD3_MASK)
     {
-      strcpy (accelerator + l, text_mod3);
-      l += sizeof (text_mod3) - 1;
+      const size_t len = sizeof(text_mod3);
+      strncpy (accelerator + l, text_mod3, len);
+      l += len - 1;
     }
   if (accelerator_mods & EGG_VIRTUAL_MOD4_MASK)
     {
-      strcpy (accelerator + l, text_mod4);
-      l += sizeof (text_mod4) - 1;
+      const size_t len = sizeof(text_mod4);
+      strncpy (accelerator + l, text_mod4, len);
+      l += len - 1;
     }
   if (accelerator_mods & EGG_VIRTUAL_MOD5_MASK)
     {
-      strcpy (accelerator + l, text_mod5);
-      l += sizeof (text_mod5) - 1;
+      const size_t len = sizeof(text_mod5);
+      strncpy (accelerator + l, text_mod5, len);
+      l += len - 1;
     }
   if (accelerator_mods & EGG_VIRTUAL_META_MASK)
     {
-      strcpy (accelerator + l, text_meta);
-      l += sizeof (text_meta) - 1;
+      const size_t len = sizeof(text_meta);
+      strncpy (accelerator + l, text_meta, len);
+      l += len - 1;
     }
   if (accelerator_mods & EGG_VIRTUAL_HYPER_MASK)
     {
-      strcpy (accelerator + l, text_hyper);
-      l += sizeof (text_hyper) - 1;
+      const size_t len = sizeof(text_hyper);
+      strncpy (accelerator + l, text_hyper, len);
+      l += len - 1;
     }
   if (accelerator_mods & EGG_VIRTUAL_SUPER_MASK)
     {
-      strcpy (accelerator + l, text_super);
-      l += sizeof (text_super) - 1;
+      const size_t len = sizeof(text_super);
+      strncpy (accelerator + l, text_super, len);
+      l += len - 1;
     }
 
-  strcpy (accelerator + l, keyval_name);
+  //const size_t len = strlen(keyval_name);
+  //strncpy (accelerator + l, keyval_name, len+1);
+  strcpy (accelerator + l, keyval_name); // Have bug! Should use strncpy().
 
   return accelerator;
 }

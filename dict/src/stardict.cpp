@@ -731,10 +731,11 @@ bool AppCore::SimpleLookupToFloatLocal(const char* sWord)
 {
 	if (sWord==NULL || sWord[0]=='\0')
 		return true;
-	char *SearchWord = (char *)g_malloc(strlen(sWord)+1);
+	const size_t sWord_len = strlen(sWord);
+	char *SearchWord = (char *)g_malloc(sWord_len+1);
 	copy_normalize_trim_spaces(SearchWord, sWord);
 	if (SearchWord[0]=='\0') {
-		strcpy(SearchWord, sWord);
+		strncpy(SearchWord, sWord, sWord_len+1);
 	}
 	char *EndPointer = SearchWord+strlen(SearchWord);
 
@@ -832,7 +833,7 @@ bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos)
 				++try_cnt;
 				break;
 			case 4:
-				strcpy(SearchWord, TriedSearchWord.c_str());
+				strncpy(SearchWord, TriedSearchWord.c_str(), TriedSearchWord.length()+1);
 				++try_cnt;
 				skip_try = true;
 			case 5:

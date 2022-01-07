@@ -2,3 +2,10 @@ Festival plugin can't pronounce!
 Flite plugin can't pronounce!
 gtk_css_provider have bugs!
 TextView change font has bug!
+
+dict/src/win32/TextOutHook.c GetWordTextOutHook(), // Bug, need to change to StrNCpy()!
+dict/src/win32/mouseover.cpp Mouseover::Init(), // Bug, need to change to StrNCpy()!
+
+Maybe g++ warning bug:
+dict/src/eggaccelerators.cpp egg_virtual_accelerator_name(), // Have bug! Should use strncpy().
+tools/src/stardict_dict_update.cpp convert_idxfile(), // Have bug! Should use strncpy().

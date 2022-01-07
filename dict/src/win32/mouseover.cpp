@@ -84,7 +84,8 @@ void Mouseover::ShowTranslation()
 {
 	char MatchedWord[MAX_SCAN_TEXT_SIZE];
 	/* GlobalData->CurMod is shared by multiple processes, copy data ASAP. */
-	strcpy(MatchedWord, GlobalData->CurMod.MatchedWord);
+	const size_t len = strlen(GlobalData->CurMod.MatchedWord);
+	strncpy(MatchedWord, GlobalData->CurMod.MatchedWord, len+1);
 	int BeginPos = GlobalData->CurMod.BeginPos;
 	bool IgnoreScanModifierKey = static_cast<bool>(GlobalData->CurMod.IgnoreScanModifierKey);
 #ifdef DEBUG
@@ -169,7 +170,7 @@ void Mouseover::Init()
 	std_win_string path_win;
 	file_name_to_utf8(path, path_utf8);
 	utf8_to_windows(path_utf8, path_win);
-	StrCpy(GlobalData->LibName, path_win.c_str());
+	StrCpy(GlobalData->LibName, path_win.c_str()); // Bug, need to change to StrNCpy()!
 	GlobalData->ServerWND = Create_hiddenwin();
 }
 

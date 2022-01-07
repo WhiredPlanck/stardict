@@ -103,8 +103,9 @@ namespace {
 			Key(const std::string& val, guint32 off=0, guint32 size=0) :
 				value(NULL), data_off(off), data_size(size)
 				{
-					value = new char [val.length()+1];
-					strcpy(value, val.c_str());
+					const size_t len = val.length();
+					value = new char [len+1];
+					strncpy(value, val.c_str(), len+1);
 				}
 		};
 		std::vector<Key> keys_list;

@@ -2716,7 +2716,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 		if(!bFound && iWordLen>1) {
 			isupcase = sWord[iWordLen-1]=='S' || !strncmp(&sWord[iWordLen-2],"ED",2);
 			if (isupcase || sWord[iWordLen-1]=='s' || !strncmp(&sWord[iWordLen-2],"ed",2)) {
-				strcpy(sNewWord,sWord);
+				strncpy(sNewWord,sWord, iWordLen+1);
 				sNewWord[iWordLen-1]='\0'; // cut "s" or "d"
 				if(LookupSimilarWordTryWord(sNewWord, sWord, servercollatefunc, iLib, iIndex, idx_suggest, best_match))
 					bFound=true;
@@ -2735,7 +2735,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 		if(!bFound && iWordLen>2) {
 			isupcase = !strncmp(&sWord[iWordLen-2],"LY",2);
 			if (isupcase || (!strncmp(&sWord[iWordLen-2],"ly",2))) {
-				strcpy(sNewWord,sWord);
+				strncpy(sNewWord,sWord,iWordLen+1);
 				sNewWord[iWordLen-2]='\0';  // cut "ly"
 				if (iWordLen>5 && sNewWord[iWordLen-3]==sNewWord[iWordLen-4]
 				    && !bIsVowel(sNewWord[iWordLen-4]) &&
@@ -2776,7 +2776,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 		if(!bFound && iWordLen>3) {
 			isupcase = !strncmp(&sWord[iWordLen-3],"ING",3);
 			if (isupcase || !strncmp(&sWord[iWordLen-3],"ing",3) ) {
-				strcpy(sNewWord,sWord);
+				strncpy(sNewWord,sWord, iWordLen+1);
 				sNewWord[iWordLen-3]='\0';
 				if ( iWordLen>6 && (sNewWord[iWordLen-4]==sNewWord[iWordLen-5])
 				     && !bIsVowel(sNewWord[iWordLen-5]) &&
@@ -2843,7 +2843,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 			      sWord[iWordLen-3] == 'o' ||
 			      (iWordLen >4 && sWord[iWordLen-3] == 'h' &&
 			       (sWord[iWordLen-4] == 'c' || sWord[iWordLen-4] == 's'))))) {
-				strcpy(sNewWord,sWord);
+				strncpy(sNewWord,sWord,iWordLen+1);
 				sNewWord[iWordLen-2]='\0';
 				if(LookupSimilarWordTryWord(sNewWord, sWord, servercollatefunc, iLib, iIndex, idx_suggest, best_match))
 					bFound=true;
@@ -2862,7 +2862,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 		if (!bFound && iWordLen>3) {
 			isupcase = !strncmp(&sWord[iWordLen-2],"ED",2);
 			if (isupcase || !strncmp(&sWord[iWordLen-2],"ed",2)) {
-				strcpy(sNewWord,sWord);
+				strncpy(sNewWord,sWord,iWordLen+1);
 				sNewWord[iWordLen-2]='\0';
 				if (iWordLen>5 && (sNewWord[iWordLen-3]==sNewWord[iWordLen-4])
 				    && !bIsVowel(sNewWord[iWordLen-4]) &&
@@ -2902,7 +2902,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 		if (!bFound && iWordLen>3) {
 			isupcase = !strncmp(&sWord[iWordLen-3],"IED",3);
 			if (isupcase || (!strncmp(&sWord[iWordLen-3],"ied",3))) {
-				strcpy(sNewWord,sWord);
+				strncpy(sNewWord,sWord,iWordLen+1);
 				sNewWord[iWordLen-3]='\0';
 				if (isupcase)
 					strcat(sNewWord,"Y"); // add a char "Y"
@@ -2925,7 +2925,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 		if (!bFound && iWordLen>3) {
 			isupcase = !strncmp(&sWord[iWordLen-3],"IES",3);
 			if (isupcase || (!strncmp(&sWord[iWordLen-3],"ies",3))) {
-				strcpy(sNewWord,sWord);
+				strncpy(sNewWord,sWord,iWordLen+1);
 				sNewWord[iWordLen-3]='\0';
 				if (isupcase)
 					strcat(sNewWord,"Y"); // add a char "Y"
@@ -2948,7 +2948,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 		if (!bFound && iWordLen>2) {
 			isupcase = !strncmp(&sWord[iWordLen-2],"ER",2);
 			if (isupcase || (!strncmp(&sWord[iWordLen-2],"er",2))) {
-				strcpy(sNewWord,sWord);
+				strncpy(sNewWord,sWord,iWordLen+1);
 				sNewWord[iWordLen-2]='\0';
 				if(LookupSimilarWordTryWord(sNewWord, sWord, servercollatefunc, iLib, iIndex, idx_suggest, best_match))
 					bFound=true;
@@ -2967,7 +2967,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 		if (!bFound && iWordLen>3) {
 			isupcase = !strncmp(&sWord[iWordLen-3], "EST", 3);
 			if (isupcase || (!strncmp(&sWord[iWordLen-3],"est", 3))) {
-				strcpy(sNewWord,sWord);
+				strncpy(sNewWord,sWord,iWordLen+1);
 				sNewWord[iWordLen-3]='\0';
 				if(LookupSimilarWordTryWord(sNewWord, sWord, servercollatefunc, iLib, iIndex, idx_suggest, best_match))
 					bFound=true;
