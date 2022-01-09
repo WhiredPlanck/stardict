@@ -1,0 +1,5 @@
+Build stardict_*.deb
+
+cp -r dict/debian-upstream debian
+dpkg-buildpackage -rfakeroot
+
